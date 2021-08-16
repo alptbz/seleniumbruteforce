@@ -1,6 +1,8 @@
 # Password brute-force using selenium
 
-This demo application is for learning purposes. 
+This demo application is for learning purposes and only works with demo application. 
+
+Original code from [EkaanshArora/Bruteforce-Selenium](https://github.com/EkaanshArora/Bruteforce-Selenium).
 
 # Requirements
  - Git
@@ -30,12 +32,12 @@ pip install -r requirements.txt
  - Add the desired words to the list from which passwords should be generated.
  - Run password_generator.py without any arguments.
 ```
-python3 password_generator.py
+python password_generator.py
 ``` 
  - Check if *dictonary.txt* has been created and filled if variants.
  - Run bruteforce.py with the URL and usernames
 ```
-python3 bruteforce.py http://example.com --username admin
+python bruteforce.py http://example.com --username admin
 ``` 
 
 

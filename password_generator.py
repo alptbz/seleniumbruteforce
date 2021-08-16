@@ -26,7 +26,11 @@ outputfile = open("dictionary.txt", "w")
 pos = 0
 currentPassword[0] = 0
 
-while pos < numberOfPasswords:
+print("Creating all possible combinations...")
+
+done = False
+
+while pos < (numberOfPasswords*2) and not done:
     password = ""
     capitalizedFirst = ""
     capitalizedAll = ""
@@ -38,15 +42,21 @@ while pos < numberOfPasswords:
     currentPassword[0] += 1
     for k in range(len(currentPassword)):
         if currentPassword[k] >= numberOfWords:
-            currentPassword[k] = -1
+            currentPassword[k] = 0
             if len(currentPassword) > (k + 1):
                 currentPassword[k + 1] += 1
-    outputfile.write(password)
-    outputfile.write('\n')
-    outputfile.write(capitalizedFirst)
-    outputfile.write('\n')
-    outputfile.write(capitalizedAll)
-    outputfile.write('\n')
+            else:
+                done = True
+    print(currentPassword)
+    if password.strip() != '':
+        outputfile.write(password)
+        outputfile.write('\n')
+        outputfile.write(capitalizedFirst)
+        outputfile.write('\n')
+        outputfile.write(capitalizedAll)
+        outputfile.write('\n')
     pos += 1
 
 outputfile.close()
+
+print("...Done. Saved to dictionary.txt")
