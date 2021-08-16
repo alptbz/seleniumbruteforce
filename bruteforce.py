@@ -75,15 +75,12 @@ def loginuserpass(driver: webdriver, usernameStr, passw):
     driver.implicitly_wait(0.5)
     driver.find_element_by_id("inputsubmit").click()
     if currentlyShowingErrorMessage:
-        print("Waiting for error message")
         WebDriverWait(driver, 10).until(
             EC.invisibility_of_element((By.CLASS_NAME, "alert-danger"))  # This is a dummy element
         )
-    print("Waiting spinner")
     WebDriverWait(driver, 10).until(
         EC.invisibility_of_element((By.ID, "spinner"))  # This is a dummy element
     )
-    print("Next step")
     WebDriverWait(driver, 10).until(
         element_has_message_or_spinner()
     )
