@@ -10,6 +10,8 @@ parser.add_argument('--username', dest='usernames', default="admin", nargs='*',
 
 args = parser.parse_args()
 
+debug = False
+
 url = args.url
 print("Using URL ", url)
 
@@ -59,6 +61,7 @@ for passwordfile in passwordfiles:
 
 
 def loginuserpass(driver: webdriver, usernameStr, passw):
+    global debug
     username = driver.find_element_by_id("inputusername")
     username.clear()
     print("username: " + usernameStr)
@@ -72,16 +75,20 @@ def loginuserpass(driver: webdriver, usernameStr, passw):
     if "Username or password is incorrect" in driver.page_source:
         currentlyShowingErrorMessage = True
     driver.find_element_by_id("inputsubmit").click()
-    driver.implicitly_wait(0.5)
     driver.find_element_by_id("inputsubmit").click()
-    driver.implicitly_wait(0.5)
     if currentlyShowingErrorMessage:
+        if debug:
+            print("Waiting for alert-danger to disappear")
         WebDriverWait(driver, 30).until(
             EC.invisibility_of_element((By.CLASS_NAME, "alert-danger"))  # This is a dummy element
         )
+    if debug:
+        print("Waiting for spinner to disappear")
     WebDriverWait(driver, 30).until(
         EC.invisibility_of_element((By.ID, "spinner"))  # This is a dummy element
     )
+    if debug:
+        print("Waiting for error or success message")
     WebDriverWait(driver, 30).until(
         element_has_message_or_spinner()
     )
