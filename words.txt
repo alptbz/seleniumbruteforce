@@ -1,0 +1,10 @@
+Enter
+your
+words
+here
+and
+execute
+password_generator.py
+to
+generate
+dictionary.txt
