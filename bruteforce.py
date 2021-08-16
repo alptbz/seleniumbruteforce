@@ -69,6 +69,7 @@ def loginuserpass(driver: webdriver, usernameStr, passw):
     password.send_keys(passw)
     # driver.find_element_by_xpath("//input[@id='inputUsername']/ancestor::form/descendant::button[@type='submit']").click()
     driver.find_element_by_id("inputsubmit").click()
+    driver.implicitly_wait(0.5)
     WebDriverWait(driver, 10).until(
         element_has_message_or_spinner()
     )
