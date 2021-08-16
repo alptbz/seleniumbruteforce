@@ -68,8 +68,22 @@ def loginuserpass(driver: webdriver, usernameStr, passw):
     print("password: " + passw + "\n")
     password.send_keys(passw)
     # driver.find_element_by_xpath("//input[@id='inputUsername']/ancestor::form/descendant::button[@type='submit']").click()
+    currentlyShowingErrorMessage = False
+    if "Username or password is incorrect" in driver.page_source:
+        currentlyShowingErrorMessage = True
     driver.find_element_by_id("inputsubmit").click()
     driver.implicitly_wait(0.5)
+    driver.find_element_by_id("inputsubmit").click()
+    if currentlyShowingErrorMessage:
+        print("Waiting for error message")
+        WebDriverWait(driver, 10).until(
+            EC.invisibility_of_element((By.CLASS_NAME, "alert-danger"))  # This is a dummy element
+        )
+    print("Waiting spinner")
+    WebDriverWait(driver, 10).until(
+        EC.invisibility_of_element((By.ID, "spinner"))  # This is a dummy element
+    )
+    print("Next step")
     WebDriverWait(driver, 10).until(
         element_has_message_or_spinner()
     )
@@ -92,7 +106,7 @@ for usernameI in range(len(usernames)):
         if driver.find_elements_by_id("inputusername"):
             loginuserpass(driver, usernames[usernameI], passwords[i])
             i += 1
-        elif "You're logged in with" in driver.page_source:
+        elif "You're logged in" in driver.page_source:
             print("SUCCESS")
             f3 = open('results.txt', 'w')
             f3.write(loginUrl + " " + usernames[usernameI] + " " + passwords[i] + '\n');
