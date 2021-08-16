@@ -106,15 +106,18 @@ WebDriverWait(driver, 30).until(
     EC.presence_of_element_located((By.ID, "inputusername")) #This is a dummy element
 )
 
+lastpassword = ""
+
 for usernameI in range(len(usernames)):
     for i in range(len(passwords)):
         if driver.find_elements_by_id("inputusername"):
             loginuserpass(driver, usernames[usernameI], passwords[i])
+            lastpassword = passwords[i]
             i += 1
         elif "You're logged in" in driver.page_source:
             print("SUCCESS")
             f3 = open('results.txt', 'w')
-            f3.write(loginUrl + " " + usernames[usernameI] + " " + passwords[i] + '\n');
+            f3.write(loginUrl + " " + usernames[usernameI] + " " + lastpassword + '\n');
             f3.close()
             driver.get(logoutUrl)
             usernameI += 1
