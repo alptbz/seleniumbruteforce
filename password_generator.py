@@ -1,7 +1,14 @@
+import argparse
+
+parser = argparse.ArgumentParser(description='generates passwords using word list')
+parser.add_argument('maxlength', type=int, default=3, nargs='?',
+                    help='maximum length of password (default = 3)')
+
+args = parser.parse_args()
 
 words = []
 
-numberOfElements = 3
+numberOfElements = args.maxlength
 
 with open('words.txt') as f:
     words = f.read().splitlines()
@@ -47,7 +54,6 @@ while pos < (numberOfPasswords*2) and not done:
                 currentPassword[k + 1] += 1
             else:
                 done = True
-    print(currentPassword)
     if password.strip() != '':
         outputfile.write(password)
         outputfile.write('\n')
